@@ -1,9 +1,12 @@
-// Code Practice: Beyond Orthogonal
+// Code Practice: Surfy Game
 // Name: Alexander Halim
-// Date: 1/26/24
+// Date: 3/6/2024
 
-// Spritesheet by ElvGames: https://elv-games.itch.io/free-fantasy-dreamland-sprites
-
+/*
+- Question Mechanic
+- Answering Mechanic (Clickable, Multi-choice Text)
+- Recommendation Mechanic (Given Result) 
+*/
 "use strict";
 
 let config = {
@@ -19,7 +22,7 @@ let config = {
       debug: true,
     },
   },
-  scene: [Movement],
+  scene: [Play],
 };
 
 let game = new Phaser.Game(config);
