@@ -43,12 +43,12 @@ class Play extends Phaser.Scene {
     // preload da assetssss
     this.load.atlas(
       "surfy",
-      "/assets/spritesheets/surfy.png",
-      "/assets/spritesheets/surfy.json"
+      "./assets/spritesheets/surfy.png",
+      "./assets/spritesheets/surfy.json"
     );
-    this.load.image("button", "/assets/button.png");
-    this.load.image("chatbubble", "/assets/chatbubble.png");
-    this.load.image("beachBackground", "/assets/beach.png");
+    this.load.image("button", "./assets/button.png");
+    this.load.image("chatbubble", "./assets/chatbubble.png");
+    this.load.image("beachBackground", "./assets/beach.png");
   }
 
   create() {
