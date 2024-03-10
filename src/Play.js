@@ -40,15 +40,18 @@ class Play extends Phaser.Scene {
   }
 
   preload() {
+    // will this work?? lol
+    const isGitHubPages = window.location.href.includes("github.io");
+    const basePath = isGitHubPages ? "/Surfy-Game/" : "./";
     // preload da assetssss
     this.load.atlas(
       "surfy",
-      "./assets/spritesheets/surfy.png",
-      "./assets/spritesheets/surfy.json"
+      basePath + "assets/spritesheets/surfy.png",
+      basePath + "assets/spritesheets/surfy.json"
     );
-    this.load.image("button", "./assets/button.png");
-    this.load.image("chatbubble", "./assets/chatbubble.png");
-    this.load.image("beachBackground", "./assets/beach.png");
+    this.load.image("button", basePath + "assets/button.png");
+    this.load.image("chatbubble", basePath + "assets/chatbubble.png");
+    this.load.image("beachBackground", basePath + "assets/beach.png");
   }
 
   create() {
