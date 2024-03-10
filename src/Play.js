@@ -4,29 +4,32 @@ class Play extends Phaser.Scene {
     this.movies = [
       // Based on mood (きぶんはどうですか?)
       {
-        title: "Alice in Wonderland",
+        title: "Star Wars",
         tags: ["うれしい", "アクション", "はれ"],
       },
       { title: "Singin' in the Rain", tags: ["かなしい", "ロマンス", "あめ"] },
       {
         title: "Interstellar",
-        tags: ["わくわくする", "ファンタジー", "くもり"],
+        tags: ["たのしい", "ファンタジー", "くもり"],
       },
       { title: "A Quiet Place", tags: ["こわい", "ホラー", "ゆき"] },
 
       // Based on company (えいがを見る時、だれと見たいですか？)
       { title: "Cast Away", tags: ["一人で", "つまらない"] },
-      { title: "Superbad", tags: ["ともだちと", "コメディ", "楽しい"] },
+      { title: "Elf", tags: ["ともだちと", "コメディ", "楽しい"] },
       {
         title: "The Incredibles ",
         tags: ["かぞくと", "ファンタジー", "まあまあ"],
       },
-      { title: "The Notebook", tags: ["こいびとと", "ロマンス", "いそがしい"] },
+      {
+        title: "Rome + Juliet",
+        tags: ["こいびとと", "ロマンス", "いそがしい"],
+      },
 
       // Based on today's weather and work/school situation (今日のてんきは？, しごとや学校はどうですか？)
       { title: "Top Gun", tags: ["はれ", "いそがしい", "アクション"] },
       {
-        title: "The Secret Life of Walter Mitty",
+        title: "Minions",
         tags: ["くもり", "まあまあ", "コメディ"],
       },
     ];
@@ -95,7 +98,7 @@ class Play extends Phaser.Scene {
     const questions = [
       {
         text: "きぶんはどうですか?",
-        choices: ["うれしい", "かなしい", "", "こわい"],
+        choices: ["うれしい", "かなしい", "たのしい", "こわい"],
       },
       {
         text: "どんなえいががすきですか？",
