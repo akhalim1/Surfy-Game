@@ -95,7 +95,7 @@ class Play extends Phaser.Scene {
     const questions = [
       {
         text: "きぶんはどうですか?",
-        choices: ["うれしい", "かなしい", "わくわくする", "こわい"],
+        choices: ["うれしい", "かなしい", "", "こわい"],
       },
       {
         text: "どんなえいががすきですか？",
