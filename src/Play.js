@@ -37,16 +37,47 @@ class Play extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("surfy", "/assets/surfy.png");
-    // Assuming button images are preloaded
+    // preload da assetssss
+    this.load.atlas(
+      "surfy",
+      "/assets/spritesheets/surfy.png",
+      "/assets/spritesheets/surfy.json"
+    );
     this.load.image("button", "/assets/button.png");
+    this.load.image("chatbubble", "/assets/chatbubble.png");
+    this.load.image("beachBackground", "/assets/beach.png");
   }
 
   create() {
-    this.cameras.main.setBackgroundColor(0xdddddd);
-    this.add
-      .image(this.cameras.main.centerX, this.cameras.main.centerY, "surfy")
-      .setScale(0.5);
+    let bg = this.add.image(
+      this.cameras.main.centerX,
+      this.cameras.main.centerY,
+      "beachBackground"
+    );
+
+    bg.setDisplaySize(this.cameras.main.width, 500);
+
+    // Create sprite
+    this.surfySprite = this.add.sprite(400, 380, "surfy", "image0.png");
+
+    // Define anims
+    this.anims.create({
+      key: "idle",
+      frames: [
+        { key: "surfy", frame: "image1.png" },
+        { key: "surfy", frame: "image2.png" },
+        { key: "surfy", frame: "image3.png" },
+        { key: "surfy", frame: "image4.png" },
+        { key: "surfy", frame: "image5.png" },
+      ],
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    // Play anim
+    this.surfySprite.anims.play("idle");
+
+    this.surfySprite.setScale(2);
 
     // Start the questionnaire
     this.displayQuestion(0);
@@ -54,8 +85,12 @@ class Play extends Phaser.Scene {
 
   displayQuestion(questionIndex) {
     // Clear previous question and choices
-    this.questionTextObjects.forEach((obj) => obj.destroy()); // Destroy previous text objects
-    this.questionTextObjects = []; // Reset the array for the new question
+    if (this.chatBubble) {
+      this.chatBubble.destroy();
+      this.chatBubbleText.destroy();
+    }
+    this.questionTextObjects.forEach((obj) => obj.destroy());
+    this.questionTextObjects = [];
 
     const questions = [
       {
@@ -82,24 +117,26 @@ class Play extends Phaser.Scene {
 
     if (questionIndex < questions.length) {
       let question = questions[questionIndex];
-      let questionText = this.add.text(100, 50, question.text, {
-        fontSize: "24px",
-        color: "#000",
-      });
-      this.questionTextObjects.push(questionText);
+
+      // Use the createChatBubble to display the question text
+      this.createChatBubble(200, 100, question.text);
 
       question.choices.forEach((choice, index) => {
-        let buttonY = 150 + 50 * index;
+        // Adjust answer button position here
+        let buttonY = 300 + 50 * index;
         let button = this.add
           .sprite(100, buttonY, "button")
           .setInteractive()
-          .setScale(0.2)
-          .setOrigin(0.2, 0.5);
-        let choiceText = this.add.text(100, 140 + 50 * index, choice, {
+          .setScale(0.25)
+          .setOrigin(0, 0.5);
+
+        // Adjust text position relative to your button
+        let choiceText = this.add.text(120, buttonY - 10, choice, {
           fontSize: "20px",
           color: "#000",
         });
-        this.questionTextObjects.push(choiceText);
+
+        this.questionTextObjects.push(button, choiceText);
 
         button.on("pointerdown", () => {
           this.answers.push(choice);
@@ -108,7 +145,6 @@ class Play extends Phaser.Scene {
           } else {
             this.recommendMovie();
           }
-          button.destroy(); // Remove the button after it's clicked
         });
       });
     } else {
@@ -127,18 +163,51 @@ class Play extends Phaser.Scene {
         recommendedMovie = movie;
       }
     });
-
     if (recommendedMovie) {
-      this.add.text(100, 100, `We recommend: ${recommendedMovie.title}`, {
-        fontSize: "32px",
-        color: "#000",
-      });
+      this.createChatBubble(
+        200,
+        100,
+        `おすすめの映画は: ${recommendedMovie.title}`
+      );
     }
   }
 
-  init(data) {
-    if (data.answers) {
-      this.answers = data.answers;
+  createChatBubble(x, y, text) {
+    // Clear previous chat bubble and text
+    if (this.chatBubble) {
+      this.chatBubble.destroy();
+      this.chatBubbleText.destroy();
     }
+
+    // Create chat bubble image as background
+    this.chatBubble = this.add.image(x, y, "chatbubble").setOrigin(0, 0);
+
+    const newBubbleWidth = 400;
+    const newBubbleHeight = 150;
+    this.chatBubble.setDisplaySize(newBubbleWidth, newBubbleHeight);
+
+    // Bubble Size
+    const textPadding = 20;
+    const availableTextWidth = newBubbleWidth - textPadding * 2;
+
+    this.chatBubbleText = this.add.text(
+      x + textPadding,
+      y + textPadding,
+      text,
+      {
+        fontSize: "18px",
+        color: "#000000",
+        wordWrap: { width: availableTextWidth },
+        align: "center",
+      }
+    );
+
+    // Text alignment
+    this.chatBubbleText.setX(
+      x + (newBubbleWidth - this.chatBubbleText.width) / 2
+    );
+    this.chatBubbleText.setY(
+      y + (newBubbleHeight - this.chatBubbleText.height) / 2 - textPadding / 2
+    );
   }
 }
