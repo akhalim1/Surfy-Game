@@ -64,6 +64,7 @@ class Play extends Phaser.Scene {
     bg.setDisplaySize(this.cameras.main.width, 500);
 
     // Create sprite
+    // image0 will be the default
     this.surfySprite = this.add.sprite(400, 380, "surfy", "image0.png");
 
     // Define anims
@@ -169,7 +170,11 @@ class Play extends Phaser.Scene {
         recommendedMovie = movie;
       }
     });
+
     if (recommendedMovie) {
+      this.surfySprite.anims.stop();
+      this.surfySprite.setTexture("surfy", "image6.png");
+
       this.createChatBubble(
         200,
         100,
